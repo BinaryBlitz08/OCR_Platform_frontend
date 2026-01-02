@@ -1,1 +1,36 @@
-<p>register works!</p>
+<div class="row justify-content-center">
+  <div class="col-md-6 col-lg-5">
+    <div class="card shadow">
+      <div class="card-body p-5">
+        <h2 class="text-center mb-4">Register</h2>
+
+        <form (ngSubmit)="register()">
+          <div class="mb-3">
+            <label class="form-label">Name</label>
+            <input type="text" class="form-control" [(ngModel)]="user.name" name="name" required>
+          </div>
+
+          <div class="mb-3">
+            <label class="form-label">Email</label>
+            <input type="email" class="form-control" [(ngModel)]="user.email" name="email" required>
+          </div>
+
+          <div class="mb-3">
+            <label class="form-label">Password</label>
+            <input type="password" class="form-control" [(ngModel)]="user.password" name="password" required>
+          </div>
+
+          <button type="submit" class="btn btn-success w-100" [disabled]="loading">
+            {{ loading ? 'Creating account...' : 'Register' }}
+          </button>
+
+          <div class="text-danger text-center mt-3" *ngIf="error">{{ error }}</div>
+        </form>
+
+        <p class="text-center mt-4">
+          Already have an account? <a routerLink="/login">Login here</a>
+        </p>
+      </div>
+    </div>
+  </div>
+</div>
