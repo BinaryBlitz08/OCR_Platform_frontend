@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { authGuard } from '../guards/auth-guard';
+import { AuthService } from './auth';
 import { Observable } from 'rxjs';
 
 @Injectable({
@@ -9,7 +9,7 @@ import { Observable } from 'rxjs';
 export class OcrService {
   private apiUrl = 'http://localhost:6000/api/ocr';
 
-  constructor(private http: HttpClient, private authService: authGuard) {}
+  constructor(private http: HttpClient, private authService: AuthService) {}
 
   private getHeaders(): HttpHeaders {
     const token = this.authService.getToken();
