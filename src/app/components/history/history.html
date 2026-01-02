@@ -1,1 +1,23 @@
-<p>history works!</p>
+<h2 class="mb-4">Your Upload History</h2>
+
+<div class="text-center" *ngIf="loading">
+  <div class="spinner-border" role="status"></div>
+</div>
+
+<div class="row" *ngIf="!loading && history.length === 0">
+  <div class="col">
+    <p class="text-muted">No uploads yet. Go to dashboard to start!</p>
+  </div>
+</div>
+
+<div class="row" *ngIf="history.length > 0">
+  <div class="col-md-6 col-lg-4 mb-4" *ngFor="let item of history">
+    <div class="card">
+      <div class="card-body">
+        <h6 class="card-title">{{ item.filename }}</h6>
+        <p class="text-muted small">Uploaded: {{ item.uploadedAt | date:'medium' }}</p>
+        <p><strong>Preview:</strong> {{ item.preview }}</p>
+      </div>
+    </div>
+  </div>
+</div>
