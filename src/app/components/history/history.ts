@@ -5,6 +5,7 @@ import { FormsModule } from '@angular/forms';
 
 @Component({
   imports: [CommonModule,FormsModule],
+  standalone: true,
   selector: 'app-history',
   templateUrl: './history.html',
   styleUrls: ['./history.css']

@@ -1,11 +1,12 @@
 import { Component } from '@angular/core';
 import { AuthService } from '../../services/auth';
-import { Router } from '@angular/router';
+import { Router, RouterLink } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 
+
 @Component({
-  imports: [CommonModule,FormsModule],
+  imports: [CommonModule,FormsModule,RouterLink],
   selector: 'app-login',
   templateUrl: './login.html',
   styleUrls: ['./login.css']

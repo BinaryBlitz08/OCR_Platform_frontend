@@ -1,23 +1,51 @@
-<h2 class="mb-4">Your Upload History</h2>
+<!-- src/app/components/history/history.component.html -->
 
-<div class="text-center" *ngIf="loading">
-  <div class="spinner-border" role="status"></div>
-</div>
+<div class="container mt-5">
+  <h2 class="text-center mb-5 fw-bold">Your Upload History</h2>
 
-<div class="row" *ngIf="!loading && history.length === 0">
-  <div class="col">
-    <p class="text-muted">No uploads yet. Go to dashboard to start!</p>
+  <!-- Loading Spinner -->
+  <div class="text-center py-5" *ngIf="loading">
+    <div class="spinner-border text-primary" role="status" style="width: 3rem; height: 3rem;">
+      <span class="visually-hidden">Loading...</span>
+    </div>
+    <p class="mt-3 text-muted">Loading your uploads...</p>
   </div>
-</div>
 
-<div class="row" *ngIf="history.length > 0">
-  <div class="col-md-6 col-lg-4 mb-4" *ngFor="let item of history">
-    <div class="card">
-      <div class="card-body">
-        <h6 class="card-title">{{ item.filename }}</h6>
-        <p class="text-muted small">Uploaded: {{ item.uploadedAt | date:'medium' }}</p>
-        <p><strong>Preview:</strong> {{ item.preview }}</p>
+  <!-- Empty State -->
+  <div class="text-center py-5" *ngIf="!loading && history.length === 0">
+    <div class="display-1 text-muted mb-4">📂</div>
+    <h4 class="text-muted">No uploads yet</h4>
+    <p class="text-muted">Go to the dashboard and upload some images to see them here!</p>
+    <a routerLink="/dashboard" class="btn btn-primary mt-3">Go to Dashboard</a>
+  </div>
+
+  <!-- History List -->
+  <div class="row g-4" *ngIf="!loading && history.length > 0">
+    <div class="col-md-6 col-lg-4" *ngFor="let item of history">
+      <div class="card h-100 shadow-sm hover-shadow border-0">
+        <div class="card-body d-flex flex-column">
+          <h5 class="card-title text-truncate">{{ item.filename }}</h5>
+          <p class="text-muted small mb-3">
+            Uploaded: {{ item.uploadedAt | date:'medium' }}
+          </p>
+          <hr class="my-3">
+          <p class="text-muted small mb-2"><strong>Text Preview:</strong></p>
+          <p class="card-text flex-grow-1">
+            {{ item.preview || 'No text extracted' }}
+          </p>
+        </div>
       </div>
     </div>
   </div>
 </div>
+
+<!-- Optional hover effect -->
+<style>
+  .hover-shadow {
+    transition: transform 0.2s, box-shadow 0.2s;
+  }
+  .hover-shadow:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 25px rgba(0,0,0,0.15) !important;
+  }
+</style>

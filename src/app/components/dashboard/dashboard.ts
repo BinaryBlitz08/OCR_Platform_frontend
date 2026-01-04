@@ -1,11 +1,13 @@
+// src/app/components/dashboard/dashboard.component.ts
+
 import { Component } from '@angular/core';
-import { OcrService } from '../../services/ocr';
 import { CommonModule } from '@angular/common';
-import { FormsModule } from '@angular/forms';
+import { OcrService } from '../../services/ocr';
 
 @Component({
-  imports: [CommonModule,FormsModule],
   selector: 'app-dashboard',
+  standalone: true,
+  imports: [CommonModule],
   templateUrl: './dashboard.html',
   styleUrls: ['./dashboard.css']
 })
@@ -14,28 +16,34 @@ export class Dashboard {
   results: any[] = [];
   loading = false;
   message = '';
+  error = '';
 
   constructor(private ocrService: OcrService) {}
 
-  onFileSelected(event: any) {
-    this.selectedFiles = event.target.files;
+  onFileSelected(event: Event) {
+    const input = event.target as HTMLInputElement;
+    this.selectedFiles = input.files;
   }
 
   upload() {
-    if (!this.selectedFiles || this.selectedFiles.length === 0) return;
+    if (!this.selectedFiles || this.selectedFiles.length === 0) {
+      this.error = 'Please select at least one image';
+      return;
+    }
 
     this.loading = true;
     this.message = '';
+    this.error = '';
     this.results = [];
 
     this.ocrService.uploadImages(this.selectedFiles).subscribe({
-      next: (res) => {
+      next: (res: any) => {
         this.results = res.results || [];
-        this.message = 'Upload successful!';
+        this.message = res.message || 'OCR processing complete!';
         this.loading = false;
       },
-      error: (err) => {
-        this.message = err.error.message || 'Upload failed';
+      error: (err: any) => {
+        this.error = err.error?.message || 'Upload failed. Check backend and dummy API.';
         this.loading = false;
       }
     });

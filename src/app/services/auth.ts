@@ -12,7 +12,7 @@ interface AuthResponse {
   providedIn: 'root'
 })
 export class AuthService {
-  private apiUrl = 'http://localhost:6000/api/auth';
+  private apiUrl = 'http://localhost:8001/api/auth';
   private tokenKey = 'auth_token';
   private currentUserSubject = new BehaviorSubject<any>(null);
   currentUser$ = this.currentUserSubject.asObservable();
