@@ -11,7 +11,7 @@ import { AuthService } from '../../services/auth';
   templateUrl: './login.html',
   styleUrls: ['./login.css']
 })
-export class LoginComponent {
+export class Login {
   credentials = { email: '', password: '' };
   error = '';
   loading = false;
@@ -21,6 +21,7 @@ export class LoginComponent {
   }
 
   login() {
+      console.log('Upload button clicked');
     this.loading = true;
     this.error = '';
 

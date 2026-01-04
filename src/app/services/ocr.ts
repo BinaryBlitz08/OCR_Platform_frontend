@@ -50,8 +50,36 @@ export class OcrService {
   }
 
   // Download file (opens in new tab)
-  downloadFile(fileId: string, type: string): void {
-    const url = `${this.apiUrl}/download/${fileId}/${type}`;
-    window.open(url, '_blank');
-  }
+  // ocr.service.ts
+// ocr.service.ts
+downloadFile(fileId: string, type: string) {
+  // Use HttpClient to include authentication headers automatically
+  this.http.get(`${this.apiUrl}/download/${fileId}/${type}`, {
+    responseType: 'blob', // Critical: tells Angular to handle binary data
+    observe: 'response'
+  }).subscribe({
+    next: (response) => {
+      // Create a local blob URL for the file data
+      const blob = new Blob([response.body!], { type: response.headers.get('Content-Type')! });
+      const url = window.URL.createObjectURL(blob);
+      
+      // Create a hidden anchor element to trigger the download
+      const link = document.createElement('a');
+      link.href = url;
+      link.download = `ocr_result_${fileId}.${type === 'text' ? 'txt' : type}`;
+      
+      document.body.appendChild(link);
+      link.click();
+      
+      // Cleanup
+      document.body.removeChild(link);
+      window.URL.revokeObjectURL(url);
+    },
+    error: (err) => {
+      console.error('Download failed:', err);
+      // This matches the "Could not download file" alert in your screenshot
+      alert('Could not download file. Please check your session.');
+    }
+  });
+}
 }

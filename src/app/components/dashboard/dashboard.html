@@ -1,9 +1,6 @@
-<!-- src/app/components/dashboard/dashboard.component.html -->
-
 <div class="container my-5">
   <h1 class="text-center mb-5 fw-bold text-primary">OCR Platform Dashboard</h1>
 
-  <!-- Upload Section -->
   <div class="card shadow-lg border-0 mb-5">
     <div class="card-body p-5">
       <h3 class="card-title text-center mb-4">Upload Images for OCR</h3>
@@ -23,91 +20,59 @@
 
       <div class="text-center">
         <button 
-  class="btn btn-primary btn-lg px-5" 
-  (click)="upload()" 
-  [disabled]="loading || !selectedFiles?.length">
-  <span *ngIf="loading" class="spinner-border spinner-border-sm me-2" role="status"></span>
-  {{ loading ? 'Processing ' + (selectedFiles?.length || 0) + ' image(s)...' : 'Extract Text' }}
-</button>
+          type="button"
+          class="btn btn-primary btn-lg px-5" 
+          (click)="upload()" 
+          [disabled]="loading || !selectedFiles?.length">
+          <span *ngIf="loading" class="spinner-border spinner-border-sm me-2" role="status"></span>
+          {{ loading ? 'Processing...' : 'Extract Text' }}
+        </button>
       </div>
 
-      <!-- Loading Warning -->
       <div class="alert alert-warning text-center mt-4" *ngIf="loading">
         <strong>Processing in progress...</strong><br>
-        This may take 10–60 seconds. <strong>Please do not refresh the page or select new files!</strong>
+        This may take 10–60 seconds. <strong>Please do not refresh!</strong>
       </div>
 
-      <!-- Success Message -->
       <div class="alert alert-success text-center mt-4" *ngIf="message && !loading && !error">
-        <i class="bi bi-check-circle-fill me-2"></i>
         <strong>Success!</strong> {{ message }}
       </div>
 
-      <!-- Error Message -->
       <div class="alert alert-danger text-center mt-4" *ngIf="error">
-        <i class="bi bi-exclamation-triangle-fill me-2"></i>
         <strong>Error:</strong> {{ error }}
       </div>
     </div>
   </div>
 
-  <!-- Results Section -->
   <div *ngIf="results.length > 0" class="mt-5">
     <h2 class="text-center mb-5 fw-bold">Extraction Results</h2>
 
-    <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-5">
+    <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4">
       <div class="col" *ngFor="let result of results">
-        <div class="card h-100 shadow hover-lift border-0">
+        <div class="card h-100 shadow-sm border-0">
           <div class="card-body d-flex flex-column">
-            <!-- Uploaded Image Preview -->
-            <div class="text-center mb-4">
-              <img 
-                [src]="result.imageUrl" 
-                class="img-fluid rounded shadow-sm" 
-                alt="{{ result.originalFilename }}"
-                style="max-height: 220px; object-fit: contain;">
-            </div>
-
+            
             <h5 class="card-title text-center text-truncate mb-3">
               {{ result.originalFilename }}
             </h5>
 
-            <hr class="my-3">
-
-            <p class="text-muted small mb-2 text-center"><strong>Extracted Text Preview:</strong></p>
-            <div class="bg-light p-3 rounded flex-grow-1 mb-3">
-              <p class="card-text mb-0">
+            <div class="bg-light p-3 rounded flex-grow-1 mb-3" style="max-height: 200px; overflow-y: auto;">
+              <p class="text-muted small mb-2"><strong>Extracted Text:</strong></p>
+              <p class="card-text">
                 {{ result.preview || 'No text extracted' }}
               </p>
             </div>
 
-            <!-- Download Buttons -->
-            <div class="text-center mt-auto">
+            <div class="mt-auto" *ngIf="result.status !== 'error'">
               <div class="btn-group w-100" role="group">
-                <button 
-                  class="btn btn-outline-secondary" 
-                  (click)="download(result.fileId, 'text')"
-                  [disabled]="result.error">
-                  TXT
-                </button>
-                <button 
-                  class="btn btn-outline-info" 
-                  (click)="download(result.fileId, 'pdf')"
-                  [disabled]="result.error">
-                  PDF
-                </button>
-                <button 
-                  class="btn btn-outline-success" 
-                  (click)="download(result.fileId, 'docx')"
-                  [disabled]="result.error">
-                  DOCX
-                </button>
+                <button class="btn btn-sm btn-outline-secondary" (click)="download(result.fileId, 'text')">TXT</button>
+                <button class="btn btn-sm btn-outline-info" (click)="download(result.fileId, 'pdf')">PDF</button>
+                <button class="btn btn-sm btn-outline-success" (click)="download(result.fileId, 'docx')">DOCX</button>
               </div>
             </div>
 
-            <!-- Individual Error -->
-            <div class="alert alert-danger small mt-3 p-2" *ngIf="result.error">
-              {{ result.error }}
+            <div class="alert alert-danger small mt-3 p-2" *ngIf="result.status === 'error' || result.error">
+              {{ result.error || 'Failed to process this file' }}
             </div>
           </div>
         </div>
@@ -115,21 +80,9 @@
     </div>
   </div>
 
-  <!-- Empty State -->
-  <div class="text-center py-5" *ngIf="!loading && results.length === 0 && !message">
+  <div class="text-center py-5" *ngIf="!loading && results.length === 0 && !message && !error">
     <div class="display-1 text-muted mb-4">📄</div>
     <h3 class="text-muted">No uploads yet</h3>
-    <p class="text-muted lead">Select images above to start extracting text!</p>
+    <p class="text-muted">Select images above to start!</p>
   </div>
 </div>
-
-<!-- Hover lift effect -->
-<style>
-  .hover-lift {
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
-  }
-  .hover-lift:hover {
-    transform: translateY(-10px);
-    box-shadow: 0 20px 40px rgba(0,0,0,0.15) !important;
-  }
-</style>
