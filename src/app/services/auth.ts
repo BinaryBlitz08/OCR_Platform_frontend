@@ -17,13 +17,7 @@ export class AuthService {
   private currentUserSubject = new BehaviorSubject<any>(null);
   currentUser$ = this.currentUserSubject.asObservable();
 
-  constructor(private http: HttpClient, private router: Router) {
-    const token = this.getToken();
-    if (token) {
-     
-      this.currentUserSubject.next({ loggedIn: true });
-    }
-  }
+  constructor(private http: HttpClient, private router: Router) {}
 
   register(user: any) {
     return this.http.post<AuthResponse>(`${this.apiUrl}/register`, user).pipe(

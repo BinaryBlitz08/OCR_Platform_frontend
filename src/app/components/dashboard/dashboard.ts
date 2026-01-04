@@ -1,5 +1,3 @@
-// src/app/components/dashboard/dashboard.component.ts
-
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { OcrService } from '../../services/ocr';
@@ -11,14 +9,16 @@ import { OcrService } from '../../services/ocr';
   templateUrl: './dashboard.html',
   styleUrls: ['./dashboard.css']
 })
-export class Dashboard {
+export class DashboardComponent {
   selectedFiles: FileList | null = null;
   results: any[] = [];
   loading = false;
   message = '';
   error = '';
 
-  constructor(private ocrService: OcrService) {}
+  constructor(private ocrService: OcrService) {
+    console.log('DASHBOARD CONSTRUCTOR CALLED');
+  }
 
   onFileSelected(event: Event) {
     const input = event.target as HTMLInputElement;
@@ -26,6 +26,9 @@ export class Dashboard {
   }
 
   upload() {
+    console.log('Upload button clicked');
+    console.log('Selected files count:', this.selectedFiles?.length);
+
     if (!this.selectedFiles || this.selectedFiles.length === 0) {
       this.error = 'Please select at least one image';
       return;
@@ -43,7 +46,7 @@ export class Dashboard {
         this.loading = false;
       },
       error: (err: any) => {
-        this.error = err.error?.message || 'Upload failed. Check backend and dummy API.';
+        this.error = err.error?.message || 'Upload failed';
         this.loading = false;
       }
     });

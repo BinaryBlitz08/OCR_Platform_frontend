@@ -1,14 +1,15 @@
-import { CommonModule } from '@angular/common';
 import { Component, signal } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
-import { Navbar } from './components/navbar/navbar';
+import { CommonModule } from '@angular/common';
+import { Navbar } from './components/navbar/navbar'; // if you have one
 
 @Component({
   selector: 'app-root',
-  imports: [RouterOutlet,CommonModule,Navbar],
+  standalone: true,
+  imports: [RouterOutlet, CommonModule, Navbar],
   templateUrl: './app.html',
   styleUrl: './app.css'
 })
 export class App {
-  protected readonly title = signal('OCR_Platform_frontend');
+  protected readonly title = signal('OCR Platform');
 }

@@ -26,18 +26,21 @@ export class OcrService {
   }
 
   // Upload multiple images (batch)
-  uploadImages(files: FileList): Observable<any> {
-    const formData = new FormData();
+ uploadImages(files: FileList): Observable<any> {
+  const formData = new FormData();
 
-    // Use "files" plural — matches backend multer.array('files')
-    for (let i = 0; i < files.length; i++) {
-      formData.append('files', files[i]);
-    }
-
-    return this.http.post(`${this.apiUrl}/upload`, formData, {
-      headers: this.getHeaders()
-    });
+  for (let i = 0; i < files.length; i++) {
+    formData.append('files', files[i]);
   }
+
+  const token = this.authService.getToken();
+
+  return this.http.post(`${this.apiUrl}/upload`, formData, {
+    headers: {
+      Authorization: `Bearer ${token}`  // ← Plain object — never stripped
+    }
+  });
+}
 
   // Get user-specific history
   getHistory(): Observable<any> {
