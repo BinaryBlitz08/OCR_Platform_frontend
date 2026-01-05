@@ -43,43 +43,52 @@ export class OcrService {
 }
 
   // Get user-specific history
-  getHistory(): Observable<any> {
-    return this.http.get(`${this.apiUrl}/history`, {
-      headers: this.getHeaders()
-    });
+  getHistory(): Observable<any[]> {
+  return this.http.get<any[]>(`${this.apiUrl}/history`, {
+    headers: {
+      Authorization: `Bearer ${this.authService.getToken()}`
+    }
+  });
   }
-
   // Download file (opens in new tab)
   // ocr.service.ts
 // ocr.service.ts
 downloadFile(fileId: string, type: string) {
-  // Use HttpClient to include authentication headers automatically
-  this.http.get(`${this.apiUrl}/download/${fileId}/${type}`, {
-    responseType: 'blob', // Critical: tells Angular to handle binary data
-    observe: 'response'
-  }).subscribe({
+  const token = this.authService.getToken();
+
+  this.http.get(
+    `${this.apiUrl}/download/${fileId}/${type}`,
+    {
+      headers: {
+        Authorization: `Bearer ${token}`   // ✅ THIS WAS MISSING
+      },
+      responseType: 'blob',
+      observe: 'response'
+    }
+  ).subscribe({
     next: (response) => {
-      // Create a local blob URL for the file data
-      const blob = new Blob([response.body!], { type: response.headers.get('Content-Type')! });
+      const blob = new Blob(
+        [response.body!],
+        { type: response.headers.get('Content-Type') || 'application/octet-stream' }
+      );
+
       const url = window.URL.createObjectURL(blob);
-      
-      // Create a hidden anchor element to trigger the download
       const link = document.createElement('a');
+
       link.href = url;
       link.download = `ocr_result_${fileId}.${type === 'text' ? 'txt' : type}`;
-      
+
       document.body.appendChild(link);
       link.click();
-      
-      // Cleanup
+
       document.body.removeChild(link);
       window.URL.revokeObjectURL(url);
     },
     error: (err) => {
       console.error('Download failed:', err);
-      // This matches the "Could not download file" alert in your screenshot
       alert('Could not download file. Please check your session.');
     }
   });
 }
+
 }

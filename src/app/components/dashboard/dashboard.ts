@@ -26,10 +26,24 @@ export class Dashboard {
   }
 
   onFileSelected(event: Event) {
-    const input = event.target as HTMLInputElement;
-    this.selectedFiles = input.files;
-    console.log('DEBUG: Files selected:', this.selectedFiles);
+  const input = event.target as HTMLInputElement;
+  if (!input.files) return;
+
+  const newFiles = Array.from(input.files);
+
+  if (!this.selectedFiles) {
+    const dataTransfer = new DataTransfer();
+    newFiles.forEach(f => dataTransfer.items.add(f));
+    this.selectedFiles = dataTransfer.files;
+  } else {
+    const dataTransfer = new DataTransfer();
+    Array.from(this.selectedFiles).forEach(f => dataTransfer.items.add(f));
+    newFiles.forEach(f => dataTransfer.items.add(f));
+    this.selectedFiles = dataTransfer.files;
   }
+
+  console.log('Files selected:', this.selectedFiles.length);
+}
 
   upload() {
     if (!this.selectedFiles || this.selectedFiles.length === 0) {

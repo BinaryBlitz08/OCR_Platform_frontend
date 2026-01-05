@@ -1,3 +1,4 @@
+
 <div class="container my-5">
   <h1 class="text-center mb-5 fw-bold text-primary">OCR Platform Dashboard</h1>
 
@@ -5,14 +6,15 @@
     <div class="card-body p-5">
       <h3 class="card-title text-center mb-4">Upload Images for OCR</h3>
 
+      <!-- ✅ DO NOT disable file input -->
       <div class="mb-4">
         <input 
-          type="file" 
-          class="form-control form-control-lg" 
-          (change)="onFileSelected($event)" 
-          multiple 
-          accept="image/*"
-          [disabled]="loading">
+          type="file"
+          class="form-control form-control-lg"
+          (change)="onFileSelected($event)"
+          multiple
+          accept="image/*">
+        
         <small class="form-text text-muted d-block text-center mt-2">
           Select one or more images (JPG, PNG, etc.)
         </small>
@@ -21,10 +23,16 @@
       <div class="text-center">
         <button 
           type="button"
-          class="btn btn-primary btn-lg px-5" 
-          (click)="upload()" 
-          [disabled]="loading || !selectedFiles?.length">
-          <span *ngIf="loading" class="spinner-border spinner-border-sm me-2" role="status"></span>
+          class="btn btn-primary btn-lg px-5"
+          (click)="upload()"
+          [disabled]="loading">
+
+          <span
+            *ngIf="loading"
+            class="spinner-border spinner-border-sm me-2"
+            role="status">
+          </span>
+
           {{ loading ? 'Processing...' : 'Extract Text' }}
         </button>
       </div>
@@ -56,7 +64,9 @@
               {{ result.originalFilename }}
             </h5>
 
-            <div class="bg-light p-3 rounded flex-grow-1 mb-3" style="max-height: 200px; overflow-y: auto;">
+            <div
+              class="bg-light p-3 rounded flex-grow-1 mb-3"
+              style="max-height: 200px; overflow-y: auto;">
               <p class="text-muted small mb-2"><strong>Extracted Text:</strong></p>
               <p class="card-text">
                 {{ result.preview || 'No text extracted' }}
@@ -71,7 +81,8 @@
               </div>
             </div>
 
-            <div class="alert alert-danger small mt-3 p-2" *ngIf="result.status === 'error' || result.error">
+            <div class="alert alert-danger small mt-3 p-2"
+                 *ngIf="result.status === 'error' || result.error">
               {{ result.error || 'Failed to process this file' }}
             </div>
           </div>
@@ -80,7 +91,9 @@
     </div>
   </div>
 
-  <div class="text-center py-5" *ngIf="!loading && results.length === 0 && !message && !error">
+  <div
+    class="text-center py-5"
+    *ngIf="!loading && results.length === 0 && !message && !error">
     <div class="display-1 text-muted mb-4">📄</div>
     <h3 class="text-muted">No uploads yet</h3>
     <p class="text-muted">Select images above to start!</p>
