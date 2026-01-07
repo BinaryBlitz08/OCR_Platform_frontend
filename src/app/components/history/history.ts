@@ -31,11 +31,11 @@ export class History implements OnInit {
 
     this.ocrService.getHistory()
       .pipe(
-        take(1), // 🔥 VERY IMPORTANT
+        take(1), 
         finalize(() => {
           console.log('History finalize → loading false');
           this.loading = false;
-          this.cdr.detectChanges(); // 🔥 FORCE UI UPDATE
+          this.cdr.detectChanges();
         })
       )
       .subscribe({

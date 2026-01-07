@@ -1,5 +1,3 @@
-// src/app/services/ocr.service.ts
-
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
@@ -9,7 +7,7 @@ import { AuthService } from './auth';
   providedIn: 'root'
 })
 export class OcrService {
-  // Your Node.js backend URL
+
   private apiUrl = 'http://localhost:8001/api/ocr';
 
   constructor(
@@ -17,7 +15,6 @@ export class OcrService {
     private authService: AuthService
   ) {}
 
-  // Get JWT token for protected routes
   private getHeaders(): HttpHeaders {
     const token = this.authService.getToken();
     return new HttpHeaders({
@@ -25,7 +22,6 @@ export class OcrService {
     });
   }
 
-  // Upload multiple images (batch)
  uploadImages(files: FileList): Observable<any> {
   const formData = new FormData();
 
@@ -37,12 +33,11 @@ export class OcrService {
 
   return this.http.post(`${this.apiUrl}/upload`, formData, {
     headers: {
-      Authorization: `Bearer ${token}`  // ← Plain object — never stripped
+      Authorization: `Bearer ${token}`  
     }
   });
 }
 
-  // Get user-specific history
   getHistory(): Observable<any[]> {
   return this.http.get<any[]>(`${this.apiUrl}/history`, {
     headers: {
@@ -50,9 +45,7 @@ export class OcrService {
     }
   });
   }
-  // Download file (opens in new tab)
-  // ocr.service.ts
-// ocr.service.ts
+ 
 downloadFile(fileId: string, type: string) {
   const token = this.authService.getToken();
 

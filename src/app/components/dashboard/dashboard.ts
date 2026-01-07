@@ -1,4 +1,4 @@
-import { Component, ChangeDetectorRef } from '@angular/core'; // Added ChangeDetectorRef
+import { Component, ChangeDetectorRef } from '@angular/core'; 
 import { CommonModule } from '@angular/common';
 import { OcrService } from '../../services/ocr';
 import { FormsModule } from '@angular/forms';
@@ -20,7 +20,7 @@ export class Dashboard {
 
   constructor(
     private ocrService: OcrService,
-    private cdr: ChangeDetectorRef // Inject this to force UI updates if needed
+    private cdr: ChangeDetectorRef 
   ) {
     console.log('DEBUG: Dashboard Component Initialized');
   }
@@ -62,7 +62,6 @@ export class Dashboard {
         finalize(() => {
           console.log('DEBUG: Finalize reached. Setting loading = false');
           this.loading = false;
-          // Force Angular to check for changes immediately
           this.cdr.detectChanges(); 
         })
       )

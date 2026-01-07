@@ -13,14 +13,13 @@ export class AuthGuard implements CanActivate {
   ) {}
 
   canActivate(): boolean | UrlTree {
-    // simple, synchronous check
+
     const isLoggedIn = this.authService.isLoggedIn();
 
     if (isLoggedIn) {
       return true;
     }
 
-    // redirect to login if not authenticated
     return this.router.createUrlTree(['/login']);
   }
 }

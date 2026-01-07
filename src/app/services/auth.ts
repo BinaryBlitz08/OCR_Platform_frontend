@@ -20,39 +20,33 @@ export class AuthService {
 
   constructor(private http: HttpClient, private router: Router) {}
 
-  // ---------- REGISTER ----------
   register(user: any) {
     return this.http
       .post<AuthResponse>(`${this.apiUrl}/register`, user)
       .pipe(tap(res => this.handleAuthSuccess(res)));
   }
 
-  // ---------- LOGIN ----------
   login(credentials: { email: string; password: string }) {
     return this.http
       .post<AuthResponse>(`${this.apiUrl}/login`, credentials)
       .pipe(tap(res => this.handleAuthSuccess(res)));
   }
 
-  // ---------- AUTH SUCCESS ----------
   private handleAuthSuccess(res: AuthResponse) {
     localStorage.setItem(this.tokenKey, res.token);
     this.currentUserSubject.next(res.user);
   }
 
-  // ---------- LOGOUT ----------
   logout() {
     localStorage.removeItem(this.tokenKey);
     this.currentUserSubject.next(null);
     this.router.navigate(['/login']);
   }
 
-  // ---------- TOKEN ----------
   getToken(): string | null {
     return localStorage.getItem(this.tokenKey);
   }
 
-  // ---------- AUTH CHECK (GUARD SAFE) ----------
   isLoggedIn(): boolean {
     return !!this.getToken();
   }

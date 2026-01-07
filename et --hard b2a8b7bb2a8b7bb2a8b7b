@@ -1,0 +1,21 @@
+[33mc750c81[m[33m ([m[1;36mHEAD[m[33m -> [m[1;32mmain[m[33m)[m HEAD@{0}: reset: moving to HEAD
+[33mc750c81[m[33m ([m[1;36mHEAD[m[33m -> [m[1;32mmain[m[33m)[m HEAD@{1}: reset: moving to HEAD
+[33mc750c81[m[33m ([m[1;36mHEAD[m[33m -> [m[1;32mmain[m[33m)[m HEAD@{2}: reset: moving to HEAD~1
+[33md9daf14[m HEAD@{3}: reset: moving to HEAD~1
+[33mb2a8b7b[m[33m ([m[1;31morigin/main[m[33m)[m HEAD@{4}: reset: moving to HEAD
+[33mb2a8b7b[m[33m ([m[1;31morigin/main[m[33m)[m HEAD@{5}: reset: moving to HEAD
+[33mb2a8b7b[m[33m ([m[1;31morigin/main[m[33m)[m HEAD@{6}: commit: fixed some major bugs
+[33md9daf14[m HEAD@{7}: commit: fixed minor bugs
+[33mc750c81[m[33m ([m[1;36mHEAD[m[33m -> [m[1;32mmain[m[33m)[m HEAD@{8}: commit: fixed minor bugs
+[33m413253f[m HEAD@{9}: commit: fixed some bugs
+[33m5cca49e[m HEAD@{10}: commit: feat: add history page showing user-specific uploads
+[33mb836ed4[m HEAD@{11}: commit: feat: add dashboard with batch upload, preview, and download buttons
+[33m88c81dd[m HEAD@{12}: commit: feat: add responsive navbar with logout , added login component with error handling ,added register component
+[33m38b0058[m HEAD@{13}: commit: feat: add auth guard to protect dashboard and history
+[33m98e57da[m HEAD@{14}: commit: feat: implement OCR service for upload, history, and download
+[33m98ec8ad[m HEAD@{15}: commit: feat: implement auth service with JWT storage and login/register
+[33m4a1b07c[m HEAD@{16}: commit: feat: setup routing with protected dashboard and history
+[33m09d4d2b[m HEAD@{17}: Branch: renamed refs/heads/main to refs/heads/main
+[33m09d4d2b[m HEAD@{19}: commit: first commit
+[33m7242007[m HEAD@{20}: Branch: renamed refs/heads/main to refs/heads/main
+[33m7242007[m HEAD@{22}: commit (initial): initial commit
